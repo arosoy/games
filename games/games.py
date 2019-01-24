@@ -11,7 +11,7 @@ class Example(QWidget):
         super().__init__()
 
         self.initui()
-
+# проба
 
     def initui(self):
         self.blok = 0
@@ -149,7 +149,7 @@ class Example(QWidget):
         self.na()
         self.show()
 
-
+# nnnhjgh
     def na(self):
         self.game = QPushButton(self)
         self.game.move(236, 236)
