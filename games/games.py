@@ -11,7 +11,7 @@ class Example(QWidget):
         super().__init__()
 
         self.initui()
-# проба
+# проба gjkhjkldfghjdfk
 
     def initui(self):
         self.blok = 0
