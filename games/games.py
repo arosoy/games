@@ -5,13 +5,13 @@ from PyQt5.QtGui import *
 import tkinter
 from tkinter import messagebox
 
-# проба
+
 class Example(QWidget):
     def __init__(self):
         super().__init__()
 
         self.initui()
-# проба gjkhjkldfghjdfk
+
 
     def initui(self):
         self.blok = 0
@@ -149,7 +149,7 @@ class Example(QWidget):
         self.na()
         self.show()
 
-# nnnhjgh
+
     def na(self):
         self.game = QPushButton(self)
         self.game.move(236, 236)
