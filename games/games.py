@@ -1,4 +1,7 @@
-import sys, time, os, random
+import sys
+# import time
+# import os
+import random
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -19,18 +22,50 @@ class Example(QWidget):
         self.animachiyakasta = 0
         self.god = 0
         self.manp = 0
-        self.pq = ''
+        self.pq = QPixmap()
         self.st_time = 0
         self.gobl_killed = 10
         self.spisoc_31 = []
         self.spisoc_32 = []
         self.spisoc_33 = []
         self.spisoc_34 = []
+        self.gobls = []
+        self.gobls_xp = []
+        self.gobls_pw = []
+        self.x = 27
+        self.y = 207
+        self.blok = 0
+        self.pixmap = [QPixmap('pic/1.png'), QPixmap('pic/2.png'), QPixmap('pic/3.png'), QPixmap('pic/4.png'),
+                       QPixmap('pic/5.png'), QPixmap('pic/6.png'), QPixmap('pic/7.png'), QPixmap('pic/8.png'),
+                       QPixmap('pic/9.png'), QPixmap('pic/10.png'), QPixmap('pic/11.png'), QPixmap('pic/12.png'),
+                       QPixmap('pic/13.png'), QPixmap('pic/14.png'), QPixmap('pic/15.png'), QPixmap('pic/16.png'),
+                       QPixmap('pic/17.png'), QPixmap('pic/18.png'), QPixmap('pic/19.png'), QPixmap('pic/20.png'),
+                       QPixmap('pic/21.png'), QPixmap('pic/22.png'), QPixmap('pic/23.png'), QPixmap('pic/24.png'),
+                       QPixmap('pic/25.png'), QPixmap('pic/26.png'), QPixmap('pic/27.png'), QPixmap('pic/28.png'),
+                       QPixmap('pic/29.png'), QPixmap('pic/30.png'), QPixmap('pic/31.png'), QPixmap('pic/32.png'),
+                       QPixmap('pic/33.png'), QPixmap('pic/34.png')]
+
+        self.go = [QPixmap('pic/gl.png'), QPixmap('pic/gz.png'), QPixmap('pic/gp.png'), QPixmap('pic/gs.png'),
+                   QPixmap('pic/gm1.png'), QPixmap('pic/gm2.png'), QPixmap('space.png')]
+        self.fb_pix = [QPixmap('pic/al.png'), QPixmap('pic/av.png'), QPixmap('pic/ap.png'), QPixmap('pic/an.png'),
+                       QPixmap('pic/space.png')]
+        self.pi = [QPixmap('pic/igrml_.png'), QPixmap('pic/igrmz_.png'), QPixmap('pic/igrmp_.png'),
+                   QPixmap('pic/igrms_.png'), QPixmap('pic/igrml_mg.png')]
+        self.kast = [QPixmap('pic/igrml_a.png'), QPixmap('pic/igrmz_a.png'), QPixmap('pic/igrmp_a.png'),
+                     QPixmap('pic/igrms_a.png')]
+        self.n = 3
+        self.p = []
+        self.pw = QLabel(self)
+        self.pp = 0
+        self.fb = []
+        self.fb_pw = []
+        self.sdfg = QPixmap('pic/zast.png')
+        self.zastavka = QLabel(self)
+        self.game = QPushButton(self)
         self.initui()
 
-
     def initui(self):
-        self.blok = 0
+
         self.setGeometry(300, 100, 672, 672)
         self.setWindowTitle('Подземелье')
         with open('pic/map.txt', 'r') as f:
@@ -43,24 +78,6 @@ class Example(QWidget):
                 a = f.readline()
                 self.sp_bot.append(list(map(int, a.split())))
 
-        self.x = 27
-        self.y = 207
-
-        self.pixmap = [QPixmap('pic/1.png'), QPixmap('pic/2.png'), QPixmap('pic/3.png'), QPixmap('pic/4.png'), QPixmap('pic/5.png'),
-                       QPixmap('pic/6.png'), QPixmap('pic/7.png'), QPixmap('pic/8.png'), QPixmap('pic/9.png'),QPixmap('pic/10.png'),
-                       QPixmap('pic/11.png'), QPixmap('pic/12.png'), QPixmap('pic/13.png'), QPixmap('pic/14.png'), QPixmap('pic/15.png'),
-                       QPixmap('pic/16.png'), QPixmap('pic/17.png'), QPixmap('pic/18.png'), QPixmap('pic/19.png'), QPixmap('pic/20.png'),
-                       QPixmap('pic/21.png'), QPixmap('pic/22.png'), QPixmap('pic/23.png'), QPixmap('pic/24.png'), QPixmap('pic/25.png'),
-                       QPixmap('pic/26.png'), QPixmap('pic/27.png'), QPixmap('pic/28.png'), QPixmap('pic/29.png'),
-                       QPixmap('pic/30.png'), QPixmap('pic/31.png'), QPixmap('pic/32.png'), QPixmap('pic/33.png'), QPixmap('pic/34.png')]
-
-        self.go = [QPixmap('pic/gl.png'), QPixmap('pic/gz.png'), QPixmap('pic/gp.png'), QPixmap('pic/gs.png'), QPixmap('pic/gm1.png'),
-                   QPixmap('pic/gm2.png'), QPixmap('space.png')]
-        self.fb_pix = [QPixmap('pic/al.png'), QPixmap('pic/av.png'), QPixmap('pic/ap.png'), QPixmap('pic/an.png'), QPixmap('pic/space.png')]
-
-        self.n = 3
-
-        self.p = []
         for i in range(7):
             self.p.append([])
             for j in range(7):
@@ -69,11 +86,9 @@ class Example(QWidget):
 
         for i in range(7):
             for j in range(7):
-                n=self.spisoc[self.y + i - 3][self.x + j - 3]-1
+                n = self.spisoc[self.y + i - 3][self.x + j - 3]-1
                 self.p[i][j].setPixmap(self.pixmap[n])
 
-        self.pi = [QPixmap('pic/igrml_.png'), QPixmap('pic/igrmz_.png'), QPixmap('pic/igrmp_.png'), QPixmap('pic/igrms_.png'), QPixmap('pic/igrml_mg.png')]
-        self.kast = [QPixmap('pic/igrml_a.png'), QPixmap('pic/igrmz_a.png'), QPixmap('pic/igrmp_a.png'), QPixmap('pic/igrms_a.png')]
         self.pw = QLabel(self)
         p = self.pi[3].copy()
         self.pp = QPainter(p)
@@ -104,9 +119,6 @@ class Example(QWidget):
                 if self.spisoc[i][j] == 34:
                     self.spisoc_34.append([i, j])
 
-        self.gobls = []
-        self.gobls_xp = []
-        self.gobls_pw = []
         for i in range(len(self.sp_bot)):
             for j in range(len(self.sp_bot[0])):
                 if self.sp_bot[i][j] > 32768:
@@ -116,17 +128,16 @@ class Example(QWidget):
                     km = self.sp_bot[i][j] % 256
                     if tm == 0:
                         for k in range(km):
-                            self.gobls.append(goblin(j, i))
+                            self.gobls.append(Goblin(j, i))
                             self.gobls_xp.append(20)
                             self.gobls_pw.append(QLabel(self))
                     if tm == 1:
-                        self.gobls.append(goblin(j, i))
+                        self.gobls.append(Goblin(j, i))
                         self.gobls_xp.append(20)
                         self.gobls_pw.append(QLabel(self))
-        self.fb = []
-        self.fb_pw = []
+
         for k in range(10):
-            self.fb.append(fireboll())
+            self.fb.append(Fireball())
             self.fb_pw.append(QLabel(self))
 
         for i in range(len(self.gobls_pw)):
@@ -138,12 +149,11 @@ class Example(QWidget):
             self.fb_pw[i].setPixmap(self.fb_pix[0])
             gx, gy, gn = self.fb[i].getcoord()
             self.fb_pw[i].move((gx - self.x + 3) * 96, (gy - self.y + 3) * 96)
-        self.sdfg = QPixmap('pic/zast.png')
+        # self.sdfg = QPixmap('pic/zast.png')
         self.zastavka = QLabel(self)
         self.zastavka.setPixmap(self.sdfg)
         self.na()
         self.show()
-
 
     def na(self):
         self.game = QPushButton(self)
@@ -152,14 +162,11 @@ class Example(QWidget):
         self.game.setText("НАЧАТЬ ИГРУ")
         self.game.clicked.connect(self.clas)
 
-
     def clas(self):
         if self.sender() == self.game:
             self.game.deleteLater()
             self.blok = 1
             self.zastavka.move(1000, 1000)
-
-
 
     def keyPressEvent(self, event):
         if self.mp_max > self.mp_normal:
@@ -203,7 +210,7 @@ class Example(QWidget):
                 if event.key() == Qt.Key_Shift:
                     sn = [(self.y, self.x - 1), (self.y - 1, self.x), (self.y, self.x + 1), (self.y + 1, self.x)]
                     y01, x01 = sn[self.n]
-                    if (self.sp_bot[y01][x01] >= 1 and self.sp_bot[y01][x01] <= 9) or self.god == 1:
+                    if ((self.sp_bot[y01][x01] >= 1) and (self.sp_bot[y01][x01] <= 9)) or (self.god == 1):
                         self.y, self.x = sn[self.n]
                     self.animachiyakasta = 0
             else:
@@ -214,23 +221,9 @@ class Example(QWidget):
                     xg, yg, ng, xp = self.gobls[j].getcoord()
                     if ng >= 4:
                         i += 1
-                ret = messagebox.askyesno("Вы погибли", 'Вы ценой своей жизни убили '+str(i)+' гоблинов\n'+'осталось '
-                                          + str(len(self.gobls) - i + 1)+'\n'+"Начать сначала?")
-                if not ret:
-                    exit()
-                else:
-                    self.x = 27
-                    self.y = 206
-                    self.n = 3
-                    sho = 0
-                    self.xp_max = 1000
-                    self.xp_normal = 1000
-                    self.mp_max = 100
-                    self.mp_normal = 100
-                    self.manp = 0
-
-
-
+                messagebox.showinfo("Вы погибли", 'Вы ценой своей жизни убили '+str(i)+' гоблинов\n'+'осталось '
+                                    + str(len(self.gobls) - i + 1))
+                exit()
 
             # Рисуем текстуры
             for i in range(7):
@@ -243,8 +236,8 @@ class Example(QWidget):
                             n = 25
                     self.p[i][j].setPixmap(self.pixmap[n])
 
-
             # Рисуем человека
+
             self.pq = self.pi[self.n].copy()
             self.pp = QPainter(self.pq)
             self.pp.setPen(QColor(255, 0, 0))
@@ -256,7 +249,7 @@ class Example(QWidget):
             self.pp.end()
             self.pw.setPixmap(self.pq)
 
-            #self.pw.setPixmap(self.pi[self.n])
+            # self.pw.setPixmap(self.pi[self.n])
             if event.key() == Qt.Key_Space:
                 if self.animachiyakasta == 1:
                     self.animachiyakasta = 0
@@ -279,7 +272,7 @@ class Example(QWidget):
                         self.pp.fillRect(23, 5, int(40 * (self.mp_normal / self.mp_max)), 3, QColor(0, 0, 255))
                         self.pp.end()
                         self.pw.setPixmap(self.pq)
-                        #self.pw.setPixmap(self.kast[self.n])
+                        # self.pw.setPixmap(self.kast[self.n])
 
             self.mp_max = 100 + 10 * self.manp
             self.xp_max = 1000 + 10 * self.manp
@@ -291,7 +284,6 @@ class Example(QWidget):
             if d >= 10 + 10 * self.manp:
                 self.manp += 1
 
-
             for i in range(7):
                 for j in range(7):
                     n = self.spisoc[self.y][self.x]
@@ -299,49 +291,35 @@ class Example(QWidget):
                         root = tkinter.Tk()
                         root.withdraw()
                         i = 0
-                        for j in range(len(self.gobls)):
-                            xg, yg, ng, xp = self.gobls[j].getcoord()
+                        for jq in range(len(self.gobls)):
+                            xg, yg, ng, xp = self.gobls[jq].getcoord()
                             if ng >= 4:
                                 i += 1
-                        ret = messagebox.askyesno("Вы прошли подземелье!",
-                                                  'Вы отважно убили ' + str(i) + ' гоблинов\n' + 'осталось '
-                                                  + str(len(self.gobls) - i) + '\n' + "Начать сначала?")
+                        messagebox.showinfo("Вы прошли подземелье!", 'Вы отважно убили ' + str(i) + ' гоблинов\n'
+                                            + 'осталось ' + str(len(self.gobls) - i) + '\n')
+                        exit()
+            for i in range(7):
+                for j in range(7):
+                    n = self.spisoc[self.y][self.x]
+                    if n == 6:
+                        iq = 0
+                        for jq in range(len(self.gobls)):
+                            xg, yg, ng, xp = self.gobls[jq].getcoord()
+                            if ng >= 4:
+                                iq += 1
+                        ret = 1
                         if not ret:
                             exit()
                         else:
                             self.x = 27
                             self.y = 206
-                            self.n = 3
-                            sho = 0
+                            self.n = 1
+                            # sho = 0
                             self.xp_max = 1000
                             self.xp_normal = 1000
                             self.mp_max = 100
                             self.mp_normal = 100
                             self.manp = 0
-                for i in range(7):
-                    for j in range(7):
-                        n = self.spisoc[self.y][self.x]
-                        if n == 6:
-                            root = tkinter.Tk()
-                            root.withdraw()
-                            i = 0
-                            for j in range(len(self.gobls)):
-                                xg, yg, ng, xp = self.gobls[j].getcoord()
-                                if ng >= 4:
-                                    i += 1
-                            ret = messagebox.askyesno("Вы сбежали ...", "Начать сначала?")
-                            if not ret:
-                                exit()
-                            else:
-                                self.x = 27
-                                self.y = 206
-                                self.n = 3
-                                sho = 0
-                                self.xp_max = 1000
-                                self.xp_normal = 1000
-                                self.mp_max = 100
-                                self.mp_normal = 100
-                                self.manp = 0
 
             for i in range(10):
                 self.fb[i].step(self.sp_bot)
@@ -483,7 +461,8 @@ class Example(QWidget):
                     if self.spisoc[yfg][xfg] == 20:
                         self.spisoc[yfg][xfg] = 23
                         self.fb[i].setcoord(0, 0, 4)
-                        self.p[yfg - self.y + 3][xfg - self.x + 3].setPixmap(self.pixmap[21])
+                        if yfg - self.y > - 3 and xfg - self.x > - 3:
+                            self.p[yfg - self.y + 3][xfg - self.x + 3].setPixmap(self.pixmap[21])
 
             self.pw.setPixmap(self.pq)
             # Выводим человека
@@ -495,7 +474,7 @@ class Example(QWidget):
                 if ng == 4:
                     self.gobl_killed += 1
 
-                if xg >= self.x - 3 and xg <= self.x + 3 and yg >= self.y - 3 and yg <= self.y + 3:
+                if (xg >= self.x - 3) and (xg <= self.x + 3) and (yg >= self.y - 3) and (yg <= self.y + 3):
                     self.gobls_pw[i].setPixmap(self.go[ng])
                     self.gobls_pw[i].move((xg - self.x + 3) * 96, (yg - self.y + 3) * 96)
                 else:
@@ -539,8 +518,7 @@ class Example(QWidget):
             self.timer.stop()
 
 
-class goblin():
-
+class Goblin:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -593,7 +571,8 @@ class goblin():
                 if spisoc[y][x] == 2:
                     self.g = random.randint(1, 5)
                     self.n = i
-                    if xi == self.x and yi >= self.y - 3 and yi <= self.y + 3 or yi == self.y and xi >= self.x - 3 and xi <= self.x + 3:
+                    if (xi == self.x) and (yi >= self.y - 3) and (yi <= self.y + 3) or (yi == self.y) \
+                            and (xi >= self.x - 3) and (xi <= self.x + 3):
                         if xi == self.x and yi >= self.y and spisoc[yi][xi] == 2:
                             self.n = 3
                         if xi == self.x and yi <= self.y and spisoc[yi][xi] == 2:
@@ -606,7 +585,8 @@ class goblin():
                     break
         else:
             nst = self.n
-            if xi == self.x and yi >= self.y - 3 and yi <= self.y + 3 or yi == self.y and xi >= self.x - 3 and xi <= self.x + 3:
+            if (xi == self.x) and (yi >= self.y - 3) and (yi <= self.y + 3) or (yi == self.y) \
+                    and (xi >= self.x - 3) and (xi <= self.x + 3):
                 if xi == self.x and yi >= self.y and spisoc[yi][xi] == 2:
                     self.n = 3
                 if xi == self.x and yi <= self.y and spisoc[yi][xi] == 2:
@@ -639,14 +619,14 @@ class goblin():
         return self.damage
 
     def draw_xp(self, pix):
-        self.p = pix.copy()
+        p = pix.copy()
         if self.xp_normal != 0:
-            self.pp = QPainter(self.p)
-            self.pp.setPen(QColor(255, 0, 0))
-            self.pp.drawRect(23, 0, 40, 3)
-            self.pp.fillRect(23, 0, int(40 * (self.xp_normal / self.xp_max)), 3, QColor(255, 0, 0))
-            self.pp.end()
-        return self.p
+            pp = QPainter(p)
+            pp.setPen(QColor(255, 0, 0))
+            pp.drawRect(23, 0, 40, 3)
+            pp.fillRect(23, 0, int(40 * (self.xp_normal / self.xp_max)), 3, QColor(255, 0, 0))
+            pp.end()
+        return p
 
     def kick(self, spisoc, n, xp):
         sn = [(self.y, self.x - 1), (self.y - 1, self.x), (self.y, self.x + 1), (self.y + 1, self.x)]
@@ -654,8 +634,7 @@ class goblin():
         self.setcoord(spisoc, x1, y1, self.n, self.xp_normal - xp)
 
 
-class fireboll():
-
+class Fireball:
     def __init__(self):
         self.x = -100
         self.y = -100
@@ -685,7 +664,6 @@ class fireboll():
         else:
             self.y, self.x = sn[self.n]
             return
-
 
 
 if __name__ == '__main__':
