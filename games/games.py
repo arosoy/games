@@ -9,17 +9,6 @@ from tkinter import messagebox
 class Example(QWidget):
     def __init__(self):
         super().__init__()
-
-        self.initui()
-
-
-    def initui(self):
-        self.blok = 0
-        self.setGeometry(300, 100, 672, 672)
-        self.setWindowTitle('Подземелье')
-
-
-
         self.timer = QBasicTimer()
         self.spisoc = []
         self.sp_bot = []
@@ -37,7 +26,13 @@ class Example(QWidget):
         self.spisoc_32 = []
         self.spisoc_33 = []
         self.spisoc_34 = []
+        self.initui()
 
+
+    def initui(self):
+        self.blok = 0
+        self.setGeometry(300, 100, 672, 672)
+        self.setWindowTitle('Подземелье')
         with open('pic/map.txt', 'r') as f:
             for i in range(222):
                 a = f.readline()
